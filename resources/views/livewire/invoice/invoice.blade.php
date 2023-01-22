@@ -48,79 +48,116 @@
                         <div>
 
 
-                            <table class="table mt-3 ">
-                                <thead>
-                                  <tr>
-                                    <th scope="col"><a wire:click.prevent="newItem" class="btn btn-primary  btn-sm" >Add New Item</a></th>
-                                    <th scope="col">Item</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Quintity</th>
-                                    <th scope="col">Sub Total</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ( $item as $index=>$items )
-                                  <tr>
-                                    <th scope="row"><a wire:click.prevent="remove({{$index}})" class="form-control btn btn-danger btn-sm">-</a></th>
-                                    <td><input  wire:model="item.{{$index}}.[itemName]" class="form-control" >
-                                        @error('item.itemName')
-                                        <span class="text-red-500">{{$message}}</span><br>
-                                        @enderror</td>
-                                    <td><input wire:model="item.{{$index}}.[price]" name="price[]" class="form-control" >
-                                        @error('item.price')
-                                        <span class="text-red-500">{{$message}}</span><br>
-                                        @enderror</td>
-                                    <td> <input wire:model="item.{{$index}}.[qy]" name="qy[]" class="form-control" />
-                                        @error('item.qy')
-                                        <span class="text-red-500">{{$message}}</span><br>
-                                        @enderror</td>
-                                    <td> <input wire:model="item.{{$index}}.[sub_total]" name="sub_total[]" class="form-control">
-                                        @error('item.sub_total')
-                                        <span class="text-red-500">{{$message}}</span><br>
-                                        @enderror</td>
-                                  </tr>
-                                  @endforeach
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td ></td>
-                                        <td colspan="4"></td>
-                                    </tr>
-                                </tfoot>
-                              </table>
+                            <form class="">
+                                <div class=" add-input mt-3 mb-1">
+                                <div class="row">
+                                <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Item </label>
+                                    <input  class="form-control" wire:model="name.0">
+                                @error('name.0') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                </div>
+                                <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label">Price </label>
+                                <input  class="form-control" wire:model="price.0" >
+                                @error('price.0') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                </div>
+                                <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label">Quintity </label>
+                                <input  class="form-control" wire:model="qy.0" >
+                                @error('qy.0') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                </div>
+                                <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Sub Total </label>
+                                <input  class="form-control" wire:model="sub_total.0" >
+                                @error('sub_total.0') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label class="control-label">Add Row </label>
+                                <button class="btn text-white btn-info btn-sm" wire:click.prevent="add({{$i}})">Add</button>
+                                </div>
+                                </div>
+                                </div>
+                                @foreach($items as $key => $value)
+                                <div class=" add-input mt-1 mb-1">
+                                <div class="row">
+                                <div class="col-md-4">
+                                <div class="form-group">
+                                <input  class="form-control"  wire:model="name.{{ $value }}">
+                                @error('name.'.$value) <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                </div>
+                                <div class="col-md-2">
+                                <div class="form-group">
+                                <input  class="form-control" wire:model="price.{{ $value }}" >
+                                @error('price.'.$value) <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                    <input  class="form-control" wire:model="qy.{{ $value }}" >
+                                    @error('qy.{{ $value }}') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                    <div class="form-group">
+                                    <input  class="form-control" wire:model="sub_total.{{ $value }}" >
+                                    @error('sub_total.{{ $value }}') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    </div>
+                                    </div>
+                                <div class="col-md-1">
+
+                                <button class="btn btn-danger btn-sm" wire:click.prevent="remove({{$key}})">remove</button>
+                                </div>
+                                </div>
+                                </div>
+                                @endforeach
+                                <div class="row">
+                                <div class="col-md-12">
+                                </div>
+                                </div>
+                                </form>
+
 
 {{--
-                        @foreach ( $item as $key=>$items )
+                        @foreach ( $as $key=>$)
                         <div class="row mt-3">
                             <div class="col-1">
                                 <label>#</label>
                                <a wire:click.prevent="remove({{$key}})" class="form-control btn btn-danger btn-sm">-</a>
                             </div>
                             <div class="col-5">
-                                <label>Item</label>
-                                <input wire:model="item.[name]" name="name[]" class="form-control" >
-                                @error('item.name')
+                                <label>/label>
+                                <input wire:model="[name]" name="name[]" class="form-control" >
+                                @error('name')
                                 <span class="text-red-500">{{$message}}</span><br>
                                 @enderror
                             </div>
                             <div class="col-2">
                                 <label>Price</label>
-                                <input wire:model="item.{{$key}}.[price]" name="price[]" class="form-control" >
-                                @error('item.price')
+                                <input wire:model="{{$key}}.[price]" name="price[]" class="form-control" >
+                                @error('price')
                                 <span class="text-red-500">{{$message}}</span><br>
                                 @enderror
                             </div>
                             <div class="col-2">
                                 <label>Quintity</label>
-                                <input wire:model="item.{{$key}}.[qy]" name="qy[]" class="form-control" />
-                                @error('item.qy')
+                                <input wire:model="{{$key}}.[qy]" name="qy[]" class="form-control" />
+                                @error('qy')
                                 <span class="text-red-500">{{$message}}</span><br>
                                 @enderror
                             </div>
                             <div class="col-2">
                                 <label>Sub Total</label>
-                                <input wire:model="item.{{$key}}.[sub_total]" name="sub_total[]" class="form-control">
-                                @error('item.sub_total')
+                                <input wire:model="{{$key}}.[sub_total]" name="sub_total[]" class="form-control">
+                                @error('sub_total')
                                 <span class="text-red-500">{{$message}}</span><br>
                                 @enderror
                             </div>
@@ -128,7 +165,7 @@
                         @endforeach
                     </div>
                         <div class="btn btn-primary mt-3 mb-3">
-                            <a wire:click.prevent="newItem" >Add New Item</a>
+                            <a wire:click.prevent="newItem" >Add New /a>
                         </div>--}}
 
                         <div class="row mt-2">

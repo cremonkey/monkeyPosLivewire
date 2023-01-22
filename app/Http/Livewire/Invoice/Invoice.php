@@ -9,13 +9,18 @@ use Livewire\Request;
 
 class Invoice extends Component
 {
-    public $item  =[]   ;
     public $invoice ;
+    public $name, $price, $qy, $sub_total;
+    public $updateMode = false;
+    public $items = [];
+    public $i = 1;
+
+
     protected $rules = [
-        // 'item.itemName'=> 'required',
-        // 'item.price'=> 'required',
-        // 'item.qy'=> 'required',
-        // 'item.sub_total'=> 'required',
+        // 'items.itemName'=> 'required',
+        // 'items.price'=> 'required',
+        // 'items.qy'=> 'required',
+        // 'items.sub_total'=> 'required',
         'invoice.Company_id'=> 'required',
         'invoice.total'=> 'required',
         'invoice.Data'=> 'required',
@@ -28,17 +33,32 @@ class Invoice extends Component
 
 
 
-    public function newItem()
+    public function add($i)
     {
-        $this->item []= ['itemName'=>'Amir', 'price'=>0, 'qy'=>1, 'sub_total'=>0];
+        $i = $i + 1;
+        $this->i = $i;
+        array_push($this->items ,$i);
     }
-    public function remove($index)
+    public function remove($i)
     {
-        unset($this->item[$index]);
-        array_values($this->item);
+        unset($this->items[$i]);
+        array_values($this->items);
     }
 
+    // public function updatedItems($key, $value)
+    // {
+
+    //         $this->sub_total = $this->price * $this->qy;
+
+    // }
+
     public function updated($key){
+
+            # code...
+dd($this->items);
+            // $price = $itemp['price'];
+            // $qy = $itemp['qy'];
+
 
         $this->invoice->Data = date('D d/m/20y');
         $no= Invoices::pluck('id')->last();
@@ -57,9 +77,8 @@ class Invoice extends Component
 
     public function mount(){
 
-        $this->item= [
-            ['itemName'=>'Amir', 'price'=>0, 'qy'=>1, 'sub_total'=>0]
-        ];
+
+
 
         if(!$this->invoice){
         $this->invoice = new Invoices();
@@ -76,26 +95,26 @@ class Invoice extends Component
         $this->invoice->save();
 
 
-        foreach($this->item as $items){
-            $this->Invoice->attach($items['Invoice_id']);
-            InvoiceDetail::create([
-                'Invoice_id' => $this->invoice['id'],
-                'Item' => $this->item['itemName'],
-                'price' => $this->item['price'],
-                'quantity' => $this->item['qy'],
-                'row_Subtotal' => $this->item['sub_total'],
-                ]);
-        }
+        // foreach($this->items as $items){
+        //     $this->Invoice->attach($items['Invoice_id']);
+        //     InvoiceDetail::create([
+        //         'Invoice_id' => $this->invoice['id'],
+        //         'items' => $this->items['itemName'],
+        //         'price' => $this->items['price'],
+        //         'quantity' => $this->items['qy'],
+        //         'row_Subtotal' => $this->items['sub_total'],
+        //         ]);
+        // }
         return redirect('invoice')->with('success','Invoice Updated successfully!');
 
-        // foreach ($request->$this->item  as $key => $value) {
+        // foreach ($request->$this->items  as $key => $value) {
 
         //     $InvoiceDetail = new InvoiceDetail();
-        //     $InvoiceDetail->price = $request->$this->item->name[$key];
-        //     $InvoiceDetail->price = $request->$this->item->price[$key];
-        //     $InvoiceDetail->quantity = $request->$this->item->qy[$key];
+        //     $InvoiceDetail->price = $request->$this->items->name[$key];
+        //     $InvoiceDetail->price = $request->$this->items->price[$key];
+        //     $InvoiceDetail->quantity = $request->$this->items->qy[$key];
 
-        //     $InvoiceDetail->row_Subtotal = $request->$this->item->sub_total[$key];
+        //     $InvoiceDetail->row_Subtotal = $request->$this->items->sub_total[$key];
 
 
 

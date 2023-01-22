@@ -11,7 +11,7 @@
                 <div class="mr-6 ml-4 mt-10  mb-20">
                     <a class="  btn btn-primary  " href="{{route('company.create')}}">{{ __('New Company') }}</a>
                 </div>
-                <table class="table table-striped ">
+                {{-- <table class="table table-striped ">
                     <thead class="border-b">
                         <tr>
                             <th>#</th>
@@ -41,17 +41,17 @@
                             </td>
                         </tr>
                         @empty
-                        
+
 
                             <h2 class=""> Have not Any Company</h2>
-                        
+
                         @endforelse
 
                     </tbody>
 
-                </table>
-                {{$companies->links()}}
-
+                </table> --}}
+                {{-- {{$companies->links()}} --}}
+                <livewire:user-table/>
             </div>
         </div>
     </div>

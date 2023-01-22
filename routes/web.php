@@ -30,7 +30,9 @@ Route::middleware([
 
     Route::resource('/company',CompanyController::class );
     Route::resource('/invoice',InvoiceController::class );
-
+    Route::get('/employees', function () {
+        return view('employ');
+        });
 
 
 
